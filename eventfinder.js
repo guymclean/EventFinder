@@ -1,63 +1,9 @@
-
-
-
-
-
-
-// distance slider
-function outputUpdate(vol) {
-	document.querySelector('#miles').value = vol + " miles";
-}
-
-
-//mouseover
-$(document).on('mouseover','.event',function(){
-   $(this).css({'background-color' : 'rgb(255, 55, 55)', 'cursor': 'pointer'});
-});
-
-// mouseout
-$(document).on('mouseout','.event',function(){
-   $(this).css('background-color', '#ffffff');
-});
-
-// if event isn't selected, select it
-$(document).on('click','.event',function(){
-	console.log($(this).attr('class') =='event selected');
-	if($(this).attr('class') =='event selected'){
-		closeEvent($(this));
-	}
-	else{
-		//close other selected eventDiv
-		openEvent($(this));
-	}
-});
-
-
-
-
-
-
-
-
 var userLatLng;
 
 var eventList = new listOfEvents();
-
-// look at this address for info of event obj returned from api
 //edinburgh 2 miles
 //https://www.eventbriteapi.com/v3/events/search/?expand=venue&location.within=2mi&location.latitude=51.4613&location.longitude=-0.3037&categories=102&token=A4R4LVO3IMVUQITDVHNI
-//london 4 miles
-//https://www.eventbriteapi.com/v3/events/search/?expand=venue&location.within=4mi&location.latitude=51.5074&location.longitude=0.1278&categories=102&token=A4R4LVO3IMVUQITDVHNI
 
-
-$(document).ready(function(){
-
-   $('#findEvents').on('click', function(){
-      getEvents(); // will pass in lat lng
-   });
-
-
-});
 
 
 function getEvents(){
@@ -65,77 +11,33 @@ function getEvents(){
    var userLat = 55.9533;
    var userLng = -3.1883;
    var userDist = 5;
-
-   // var edinburghAPIString = 'https://www.eventbriteapi.com/v3/events/search/?expand=venue&location.within=2mi&location.latitude=51.4613&location.longitude=-0.3037&categories=102&token=A4R4LVO3IMVUQITDVHNI';
-   // var londonAPIString = 'https://www.eventbriteapi.com/v3/events/search/?expand=venue&location.within=4mi&location.latitude=51.5074&location.longitude=0.1278&categories=102&token=A4R4LVO3IMVUQITDVHNI';
-
    var eventbriteAPIString = createEventbriteAPIString(userLat, userLng, userDist);
    var meetupAPIString = createMeetupAPIString(userLat, userLng, userDist);
-
    var eventbriteEvents;
    var meetupEvents;
 
-   //display search animation#
+   //display search animation
    $('#progress').css('display', 'block');
 
    $.when(
-     // Get Eventbrite events
-     $.get(eventbriteAPIString, function(events) {
-      //   eventbriteEvents = formatEventbriteEvents(events);
-      //   console.log("Eventbrite events");
-      //   console.log(eventbriteEvents);
-     }),
-     // Get Meetup events
-   //   $.get(meetupAPIString, function(events) {
-   //      meetupEvents = formatEventbriteEvents(events);
-   //    //   console.log("Meetup events");
-   //    //   console.log(meetupEvents);
-   //   }),
+     $.get(eventbriteAPIString),
      $.get({
               url: meetupAPIString,
               type: "GET",
               dataType: "jsonp",
-              success: function (events) {
-               //   console.log('before formatyting meetup');
-               //   console.log(events.results);
-               //   meetupEvents = formatMeetupEvents(events['results']);
-               //   console.log("after formatting meetup events:");
-               //   console.log(events.results);
-     }}),
+	  }),
+	  ).done(function(eventbriteEvents, meetupEvents) {
 
-  ).done(function(eventbriteEvents, meetupEvents) {
+	     eventbriteEvents = formatEventbriteEvents(eventbriteEvents[0].events);
+	     meetupEvents = formatMeetupEvents(meetupEvents[0].results);
+	     eventList.events = eventbriteEvents.concat(meetupEvents);
 
-     console.log('before formatting meetup:');
-     console.log(meetupEvents);
-     console.log("before formatting eventbrite:");
-     console.log(eventbriteEvents);
+	     //hide search animation
+	     $('#progress').css('display', 'none');
 
-     eventbriteEvents = formatEventbriteEvents(eventbriteEvents[0].events);
-     meetupEvents = formatMeetupEvents(meetupEvents[0].results);
-
-     console.log('after formatting meetup:');
-     console.log(meetupEvents);
-     console.log("after formatting eventbrite:");
-     console.log(eventbriteEvents);
-
-     eventList.events = eventbriteEvents.concat(meetupEvents);
-
-
-
-     //hide search animation
-     $('#progress').css('display', 'none');
-
-
-
-	eventList.sortByDate();
-
-
-
-console.log(eventList.events);
-
-     displayAllEvents(eventList.events);
-
-});
+		  eventList.sortByDate();
+	     displayAllEvents(eventList.events);
+	  });
 
 }
 
@@ -179,7 +81,6 @@ function formatMeetupEvents(unformattedEvents){
 
    return eventArray;
 }
-
 
 
 function createEventbriteEvent(eventObj) {
@@ -227,7 +128,6 @@ function createMeetupEvent(eventObj) {
 }
 
 
-
 function createEventbriteAPIString(userLat, userLng, userDist){
 
    var q1 = 'https://www.eventbriteapi.com/v3/events/search/?expand=venue&location.within=';
@@ -262,9 +162,5 @@ function parseDate(aDate){
         sameElse : 'ddd Do MMM [@] HHmm'
       }
    });
-
-   // aDate = new Date(aDate);
    return moment(aDate).calendar();
-
-   // return aDate;
 }

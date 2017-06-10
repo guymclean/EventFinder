@@ -1,7 +1,9 @@
 
+*{
+   font-family: 'Quicksand', sans-serif;
+}
 
 body{
-      font-family: 'Quicksand', sans-serif;
       font-size: 0.9em;
       margin: 0;
 }
@@ -36,8 +38,11 @@ h1 {
 }
 
 #distance-slider {
+   display: block;
+   clear: both;
    width: 80%;
-   margin: 0 10%;
+   max-width: 220px;
+   margin: auto;
 }
 
 #findEvents{
