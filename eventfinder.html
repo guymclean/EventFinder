@@ -16,16 +16,15 @@
 	<div id="main-area">
 		<div id="title-area">
 			<h1>Tech Event Finder</h1>
-			<div id="search-bar">
-					<input type="text" id="user-address" placeholder="Enter your location">
-					<br>
-					<input type="button" id="findEvents" value="Find Events">
-			</div>
-			<div id="distance">
-				<input type="range" min="0" max="100" value="20" id="distance-slider"
-					step="1" oninput="outputUpdate(value)">
+
+			<div id="input-fields">
+				<input type="text" id="user-address" placeholder="Enter your location">
+				<input type="range" min="0" max="100" value="20" id="distance-slider"step="1" oninput="outputUpdate(value)">
 				<output for="distance-slider" id="miles">20 miles</output>
+				<br>
+				<input type="button" id="findEvents" value="Find Events">
 			</div>
+
 		</div>
 
 

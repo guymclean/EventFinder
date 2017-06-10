@@ -1,7 +1,6 @@
 
-
+// LIST OF EVENTS
 function listOfEvents(){
-
    this.events = [];
 
    this.addEvent = function(anEvent){
@@ -14,13 +13,23 @@ function listOfEvents(){
       }
    };
 
-   this.compareDates = function(eventA, eventB){
-      return moment(eventA.date).isSameOrAfter(eventB.date); // remove first moment call?
-   };
-
    this.sortByDate = function(){
-      this.events.sort(this.compareDates);
+      this.events.sort(function(eventA, eventB){
+         return moment(eventA.date).isSameOrAfter(moment(eventB.date));
+      });
       this.generateIndices();
    };
 
+   this.sortByDistance = function(){ // code this
+      this.events.sort(function(eventA, eventB){
+         return moment(eventA.date).isSameOrAfter(moment(eventB.date));
+      });
+      this.generateIndices();
+   };
 };
+
+
+// EVENT
+function event(){
+
+}

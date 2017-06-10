@@ -20,32 +20,30 @@ body{
 
 h1 {
    text-align: center;
-   margin: 0 0 1em 0;
+   margin: 0.5em 0;
 }
 
-#search-bar {
-   width: 50%;
-   float: left;
+#input-fields{
+   padding: 0.5em 10%;
+   margin-bottom: 1em;
+   text-align: center;
 }
 
 #user-address {
    margin-bottom: 10px;
-   width: 90%
-}
-
-#distance {
-   text-align: center;
-   width: 50%;
-      float: left;
-}
-#distance p {
    width: 100%;
-   margin: 0;
-
+   max-width: 320px;
 }
+
 #distance-slider {
    width: 80%;
    margin: 0 10%;
+}
+
+#findEvents{
+   margin-top: 1em;
+   width: 60%;
+   max-width: 150px;
 }
 
 #results-table{
@@ -109,13 +107,6 @@ h1 {
    margin-bottom: 0.4em;
 }
 
-/*a.entry-summary{
-   display: block;
-   width: 100%;
-   text-align: center;
-   color: #00163a;
-   font-size: 1.5em;
-}*/
 
 .event-date{
    text-align: center;
