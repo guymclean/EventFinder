@@ -1,4 +1,8 @@
+var userLatLng;
+
 function initMap(){
+
+	userLatLng = null;
 
 	map = new google.maps.Map(document.getElementById('map'), {
 	  center: {lat: 55.9533, lng: -3.1883},
@@ -29,7 +33,9 @@ function initMap(){
 		return;
 	  }
 
+	//   console.log(place.geometry.location);
 	  userLatLng = place.geometry.location;
+	  console.log(userLatLng.toString());
 	  mapBounds = new google.maps.LatLngBounds();
 
 	  var address = '';

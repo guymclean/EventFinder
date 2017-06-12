@@ -1,15 +1,25 @@
+// Changes the reading of the distance label
+function outputDistance(distance) {
+	$('#miles').text(distance + " miles");
+}
+
 $(document).ready(function(){
 
 	// Find Events on click
    $('#findEvents').on('click', function(){
-      getEvents(); // will pass in lat lng
+
+		if (userLatLng == undefined){
+			alert("You've not entered your location...");
+			return;
+		}
+		clearPreviousSearch();
+
+		var lat = userLatLng.lat();
+		var lng = userLatLng.lng();
+		var distance = $('#distance-slider').val();
+
+      getEvents(lat, lng, distance);
    });
-
-	// Changes the reading of the distance label
-	function outputDistance(distance) {
-		document.querySelector('#miles').value = distance + " miles";
-	}
-
 
 	// Mouseover event
 	$(document).on('mouseover','.event',function(){

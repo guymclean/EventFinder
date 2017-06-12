@@ -1,35 +1,38 @@
-var userLatLng;
+// var userLatLng;
 
 var eventList = new listOfEvents();
+var $selectedEvent;
 //edinburgh 2 miles
 //https://www.eventbriteapi.com/v3/events/search/?expand=venue&location.within=2mi&location.latitude=51.4613&location.longitude=-0.3037&categories=102&token=A4R4LVO3IMVUQITDVHNI
 
 
 
-function getEvents(){
+function getEvents(lat, lng, distance){
 
-   var userLat = 55.9533;
-   var userLng = -3.1883;
-   var userDist = 5;
-   var eventbriteAPIString = createEventbriteAPIString(userLat, userLng, userDist);
-   var meetupAPIString = createMeetupAPIString(userLat, userLng, userDist);
-   var eventbriteEvents;
-   var meetupEvents;
+   var eventbriteAPIString = createEventbriteAPIString(lat, lng, distance);
+   var meetupAPIString = createMeetupAPIString(lat, lng, distance);
+
 
    //display search animation
    $('#progress').css('display', 'block');
 
    $.when(
+   //   $.get({
+   //            url: "https://opentechcalendar.co.uk/api1/events.jsonp?callback=myfunc",
+   //            type: "GET",
+   //            dataType: "jsonp",
+	//   }),
      $.get(eventbriteAPIString),
      $.get({
               url: meetupAPIString,
               type: "GET",
               dataType: "jsonp",
 	  }),
-	  ).done(function(eventbriteEvents, meetupEvents) {
+).done(function(eventbriteEvents, meetupEvents) {
+      //   var otcEvents = formatOTCEvents(otcEvents[0].data);_
 
-	     eventbriteEvents = formatEventbriteEvents(eventbriteEvents[0].events);
-	     meetupEvents = formatMeetupEvents(meetupEvents[0].results);
+	     var eventbriteEvents = formatEventbriteEvents(eventbriteEvents[0].events);
+	     var meetupEvents = formatMeetupEvents(meetupEvents[0].results);
 	     eventList.events = eventbriteEvents.concat(meetupEvents);
 
 	     //hide search animation
@@ -163,4 +166,11 @@ function parseDate(aDate){
       }
    });
    return moment(aDate).calendar();
+}
+
+function clearPreviousSearch(){
+	eventsList = [];
+   selectedEvent = null;
+	// removeMarker();
+	// mapBounds = new google.maps.LatLngBounds();
 }
