@@ -18,6 +18,7 @@ body{
    opacity: 0.9;
    background: #ffffff;
    overflow: hidden;
+   border-bottom: 1px solid #eeeeee;
 }
 
 h1 {
@@ -55,10 +56,10 @@ h1 {
    width: 100%;
    float: left;
    height: auto;
-   /*padding: 5%;*/
    margin-right: 5%;
-   background: #eeeeee;
-   opacity: 0.8;
+   /*background: #f9f9f9;*/
+   background: #ffffff url('event-bg.png');
+   /*opacity: 0.8;*/
 }
 
 #map-window {
@@ -82,26 +83,30 @@ h1 {
    top: 0;
    height: 100%;
    opacity: 0.7;
-   background: #ffffff
-   url('progressanimation.gif') no-repeat fixed center;
+   background: #ffffff url('progressanimation.gif') no-repeat fixed center;
 }
 
 
 
 .event{
-   /*make min width the height of the browser window so it doesnt fall short */
    width: 90%;
    float: left;
    font-family: 'Quicksand', sans-serif;
    font-size: 1em;
    color: #00163a;
+   background: rgb(248, 248, 248, 0);
    line-height: 1.4em;
    padding: 5%;
-   opacity: 1;
 }
 
 .selected{
-   background: red !important;
+   background: rgba(255, 255, 255, 0.4) !important;
+   outline: 2px solid #A2A2DB !important;
+   outline-offset: -10px !important;
+}
+
+.selected:hover{
+   cursor: default !important;
 }
 
 
@@ -117,4 +122,14 @@ h1 {
    text-align: center;
    font-size: 0.9em;
    font-weight: bold;
+}
+
+a{
+   text-decoration: none;
+}
+a:hover{
+   text-decoration: underline;
+}
+a:visited{
+   color: #A834F9;
 }

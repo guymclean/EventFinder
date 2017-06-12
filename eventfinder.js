@@ -171,6 +171,7 @@ function parseDate(aDate){
 function clearPreviousSearch(){
 	eventsList = [];
    selectedEvent = null;
+   $('#results-table').empty();
 	// removeMarker();
 	// mapBounds = new google.maps.LatLngBounds();
 }

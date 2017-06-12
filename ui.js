@@ -23,24 +23,39 @@ $(document).ready(function(){
 
 	// Mouseover event
 	$(document).on('mouseover','.event',function(){
-	   $(this).css({'background-color' : 'rgb(255, 55, 55)', 'cursor': 'pointer'});
+	   $(this).css({'background' : 'rgba(255, 255, 255, 0.4)',
+						'outline' : '2px  solid #A2A2DB',
+    					'outline-offset' : '-10px',
+						'cursor': 'pointer'});
 	});
 
 	// Mouseout event
 	$(document).on('mouseout','.event',function(){
-	   $(this).css('background-color', '#ffffff');
+	   $(this).css({'background' : 'rgba(248, 248, 248, 0)',
+						'outline' : 'none'});
 	});
+
 
 	// Click event
 	$(document).on('click','.event',function(){
-		console.log($(this).attr('class') =='event selected');
-		if($(this).attr('class') =='event selected'){
-			closeEvent($(this));
-		}
-		else{
-			//close other selected eventDiv
-			openEvent($(this));
+		if ($('a:hover').length == 0) { //don't close event if they're clicking on a link
+			if($(this).attr('class') =='event selected'){
+				closeEvent($(this));}
+			else{
+				if($selectedEvent != null){
+					closeEvent($selectedEvent);}
+				openEvent($(this));
+			}
 		}
 	});
 
 });
+
+// function to scroll to bring selected event to top of screen
+$.fn.scrollView = function () {
+    return this.each(function () {
+        $('html, body').animate({
+            scrollTop: $(this).offset().top
+        }, 300); // number here represents the scroll speed - 0 is instantaneous
+    });
+}

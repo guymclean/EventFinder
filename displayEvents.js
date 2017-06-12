@@ -56,4 +56,6 @@ function openEvent($anEvent){
    $anEvent.children(".event-title").html("<a href=" + theEvent.url +
       " target='_blank' class='entry-summary'>" + theEvent.title + "</a>");
    $anEvent.children("p").html(theEvent.description);
+
+   $anEvent.scrollView(); // bring top of event to top of browser window
 }
