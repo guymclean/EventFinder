@@ -5,6 +5,8 @@ function outputDistance(distance) {
 
 $(document).ready(function(){
 
+	$scrollIcon = $('#scroll-icon');
+
 	// Find Events on click
    $('#findEvents').on('click', function(){
 
@@ -48,6 +50,22 @@ $(document).ready(function(){
 			}
 		}
 	});
+
+	// display scroll to top icon if screen is scrolled
+	$(document).scroll(function() {
+	   if($(window).scrollTop() > 0) {
+			$scrollIcon.css({'display' : 'block'});}
+		else{
+			$scrollIcon.css({'display' : 'none'});}
+	});
+
+	// scroll to top of screen when scroll icon is clicked
+	$scrollIcon.click(function(){
+        $('html,body').animate({ scrollTop: 0 }, 'medium');
+        return false;
+    });
+
+
 
 });
 
