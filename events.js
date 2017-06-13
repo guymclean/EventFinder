@@ -1,5 +1,3 @@
-// var userLatLng;
-
 var eventList = new listOfEvents();
 var $selectedEvent = null;
 //edinburgh 2 miles
