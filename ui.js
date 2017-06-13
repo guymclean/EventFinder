@@ -5,7 +5,9 @@ function outputDistance(distance) {
 
 $(document).ready(function(){
 
+	$resultsTable = $('#results-table');
 	$scrollIcon = $('#scroll-icon');
+	$noEvents = $('#no-events');
 
 	// Find Events on click
    $('#findEvents').on('click', function(){

@@ -3,14 +3,14 @@
 function displayAllEvents(eventList){
 
    if (eventList.length == 0) {
-      var noEvents = document.createElement("p");
-      noEvents.innerHTML = "There don't appear to be any events in your area - try a larger search area.";
-      document.getElementById('results-table').appendChild(noEvents);
+      $('#no-events').css({'display' : 'block'});
       return;
    }
+   $('#no-events').css({'display' : 'none'});
    $.each(eventList, function(i, anEvent){
       displayEvent(anEvent);
    });
+   console.log("displayed");
 }
 
 //CONVERT TO JQUERY///////////////////////////////////////

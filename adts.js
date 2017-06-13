@@ -15,7 +15,7 @@ function listOfEvents(){
 
    this.sortByDate = function(){
       this.events.sort(function(eventA, eventB){
-         return moment(eventA.date).isSameOrAfter(moment(eventB.date));
+         return eventA.date.getTime() - eventB.date.getTime();
       });
       this.generateIndices();
    };
@@ -26,6 +26,8 @@ function listOfEvents(){
       });
       this.generateIndices();
    };
+
+
 };
 
 

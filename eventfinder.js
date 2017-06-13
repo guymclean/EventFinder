@@ -90,15 +90,15 @@ function createEventbriteEvent(eventObj) {
 
    var eventLatLng = new google.maps.LatLng(eventObj.venue.address.latitude, eventObj.venue.address.longitude);
 
-   var dateString = eventObj.start.local;
-   dateString = parseDate(dateString);
+   var dateObject = new Date(eventObj.start.local);
+   var dateString = parseDate(dateObject);
 
    var anEvent = {
 		index: 0,
       title: eventObj.name.text,
       description: eventObj.description.text,
       shortDescription: eventObj.description.text.slice(0,300) + "...",
-      date: eventObj.start.local,
+      date: dateObject,
 		displayDate: dateString,
       url: eventObj.url,
       latLng: eventLatLng
@@ -111,9 +111,7 @@ function createEventbriteEvent(eventObj) {
 function createMeetupEvent(eventObj) {
 
    var eventLatLng = new google.maps.LatLng(eventObj.venue.lat, eventObj.venue.lon);
-
-   var dateObject = eventObj.time;
-   dateObject = new Date(dateObject);
+   var dateObject = new Date(eventObj.time);
    var dateString = parseDate(dateObject);
 
    var anEvent = {
@@ -171,7 +169,9 @@ function parseDate(aDate){
 function clearPreviousSearch(){
 	eventsList = [];
    selectedEvent = null;
-   $('#results-table').empty();
+   $noEvents.detach();
+   $resultsTable.empty();
+   $noEvents.appendTo($resultsTable);
 	// removeMarker();
 	// mapBounds = new google.maps.LatLngBounds();
 }
