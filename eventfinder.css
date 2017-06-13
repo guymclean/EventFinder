@@ -14,8 +14,8 @@ body{
    width: 50%;
 }
 
-#title-area{
-   opacity: 0.9;
+#title-area{ /* map backrgound?*/
+   opacity: 1;
    background: #ffffff;
    overflow: hidden;
    border-bottom: 1px solid #eeeeee;
@@ -62,6 +62,10 @@ padding-left: 0.4em;
    padding: 0.2em;
 }
 
+#hidden-div{
+   display: none;
+}
+
 #results-table{
    width: 100%;
    float: left;
@@ -77,6 +81,7 @@ padding-left: 0.4em;
    height: 100vh;
    position: fixed;
    margin-left: 50%;
+   z-index: -1;
 }
 
 #map {
@@ -118,13 +123,12 @@ padding-left: 0.4em;
 
 .event{
    width: 90%;
-   float: left;
+   padding: 5%;
    font-family: 'Quicksand', sans-serif;
    font-size: 1em;
    color: #00163a;
    background: rgb(248, 248, 248, 0);
    line-height: 1.4em;
-   padding: 5%;
 }
 
 #no-events{
@@ -148,12 +152,19 @@ padding-left: 0.4em;
 
 
 .event-title{
+   max-width: 680px;
    text-align: center;
    color: #00163a;
    font-size: 1.5em;
-   margin-bottom: 0.4em;
+   margin: 0 auto 0.4em;
+   line-height: 1.3em
 }
 
+.event-description{
+   max-width: 680px;
+   color: #00163a;
+   margin: 0.5em auto;
+}
 
 .event-date{
    text-align: center;
@@ -169,4 +180,17 @@ a:hover{
 }
 a:visited{
    color: #A834F9;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 900px) {
+
+    #main-area {
+        width: 100%;
+    }
+
+
+
+
+
 }

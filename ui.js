@@ -8,6 +8,11 @@ $(document).ready(function(){
 	$resultsTable = $('#results-table');
 	$scrollIcon = $('#scroll-icon');
 	$noEvents = $('#no-events');
+	$hiddenDiv = $('#hidden-div');
+	$mapWindow = $('#map-window');
+	$map = $('#map');
+
+	makeResponsive();
 
 	// Find Events on click
    $('#findEvents').on('click', function(){
@@ -42,15 +47,16 @@ $(document).ready(function(){
 
 	// Click event
 	$(document).on('click','.event',function(){
-		if ($('a:hover').length == 0) { //don't close event if they're clicking on a link
-			if($(this).attr('class') =='event selected'){
+		if ($(this).attr('class') =='event selected'){
+			if (!$('a:hover').length){
 				closeEvent($(this));}
-			else{
+		}
+		// && !$('#MAP!!:hover').length - don't close event if they're clicking on a link or the map
+
+		else{
 				if($selectedEvent != null){
 					closeEvent($selectedEvent);}
-				openEvent($(this));
-			}
-		}
+				openEvent($(this));}
 	});
 
 	// display scroll to top icon if screen is scrolled
@@ -67,6 +73,21 @@ $(document).ready(function(){
         return false;
     });
 
+
+	 function makeResponsive(){
+		//  console.log("outside make responsive");
+		//  console.log($hiddenDiv.children().length == 0);
+		 	if ($(window).width() < 900){
+				if (!$hiddenDiv.children().length){
+					$map.detach();
+					$map.appendTo($hiddenDiv);}}  // var mapHeight = $map.width()/1.8 + "px";
+			else{
+				if(!$mapWindow.find($map).length){ // if map window doesnt contain the map
+					$map.detach();
+					$map.appendTo($mapWindow);}}
+	 }
+
+	 $(window).resize(makeResponsive);
 
 
 });

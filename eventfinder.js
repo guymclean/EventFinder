@@ -1,7 +1,7 @@
 // var userLatLng;
 
 var eventList = new listOfEvents();
-var $selectedEvent;
+var $selectedEvent = null;
 //edinburgh 2 miles
 //https://www.eventbriteapi.com/v3/events/search/?expand=venue&location.within=2mi&location.latitude=51.4613&location.longitude=-0.3037&categories=102&token=A4R4LVO3IMVUQITDVHNI
 
@@ -89,14 +89,15 @@ function formatMeetupEvents(unformattedEvents){
 function createEventbriteEvent(eventObj) {
 
    var eventLatLng = new google.maps.LatLng(eventObj.venue.address.latitude, eventObj.venue.address.longitude);
-
    var dateObject = new Date(eventObj.start.local);
    var dateString = parseDate(dateObject);
+   var moreInfoLink = " <a href=" + eventObj.url +
+      " target='_blank'>" + "More info" + "</a>";
 
    var anEvent = {
 		index: 0,
       title: eventObj.name.text,
-      description: eventObj.description.text,
+      description: eventObj.description.text + moreInfoLink,
       shortDescription: eventObj.description.text.slice(0,300) + "...",
       date: dateObject,
 		displayDate: dateString,
@@ -113,11 +114,13 @@ function createMeetupEvent(eventObj) {
    var eventLatLng = new google.maps.LatLng(eventObj.venue.lat, eventObj.venue.lon);
    var dateObject = new Date(eventObj.time);
    var dateString = parseDate(dateObject);
+   var moreInfoLink = " <a href=" + eventObj.event_url +
+      " target='_blank'>" + "More info" + "</a>";
 
    var anEvent = {
 		index: 0,
       title: eventObj.name,
-      description: eventObj.description,
+      description: eventObj.description + moreInfoLink,
       shortDescription: eventObj.description.slice(0,300) + "...",
 		date: dateObject,
       displayDate: dateString,

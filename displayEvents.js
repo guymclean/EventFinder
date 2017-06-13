@@ -1,7 +1,6 @@
 
 
 function displayAllEvents(eventList){
-
    if (eventList.length == 0) {
       $('#no-events').css({'display' : 'block'});
       return;
@@ -10,7 +9,6 @@ function displayAllEvents(eventList){
    $.each(eventList, function(i, anEvent){
       displayEvent(anEvent);
    });
-   console.log("displayed");
 }
 
 //CONVERT TO JQUERY///////////////////////////////////////
@@ -28,6 +26,7 @@ function displayEvent(anEvent){
    eventDate.innerHTML = anEvent.displayDate;
 
    var eventDescription = document.createElement("p");
+   eventDescription.setAttribute("class","event-description");
    eventDescription.innerHTML = anEvent.shortDescription;
 
    eventDiv.appendChild(eventTitle);
@@ -38,12 +37,14 @@ function displayEvent(anEvent){
 
 
 function closeEvent($anEvent){
+      $selectedEvent = null;
       var index = $anEvent.attr("id");
       var theEvent = eventList.events[index];
 
       $anEvent.attr("class","event");
       $anEvent.children(".event-title").html(theEvent.title);
       $anEvent.children("p").html(theEvent.shortDescription);
+
    }
 
 
@@ -54,7 +55,7 @@ function openEvent($anEvent){
 
    $anEvent.attr("class","event selected");
    $anEvent.children(".event-title").html("<a href=" + theEvent.url +
-      " target='_blank' class='entry-summary'>" + theEvent.title + "</a>");
+      " target='_blank'>" + theEvent.title + "</a>");
    $anEvent.children("p").html(theEvent.description);
 
    $anEvent.scrollView(); // bring top of event to top of browser window
