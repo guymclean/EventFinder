@@ -136,7 +136,7 @@ function createMeetupEvent(eventObj) {
 		date: dateObject,
       displayDate: dateString,
       url: eventObj.event_url,
-      address: eventObj.venue.address_1,
+      address: eventObj.venue.address_1 + " " + eventObj.venue.city,
       latLng: eventLatLng
       };
 
@@ -158,11 +158,16 @@ function createEventbriteAPIString(userLat, userLng, userDist){
 
 function createMeetupAPIString(userLat, userLng, userDist){
 
+   // var q1 = 'https://api.meetup.com/2/open_events?and_text=False&offset=0&format=json&lon=';
+   // var q2 = '&limited_events=False&text_format=plain&only=description%2Ctime%2Cevent_url%2Cgroup.name%2Cname%2Cvenue.lon%2Cvenue.lat%2C&photo-host=public&page=30&radius=';
+   // var q3 = '&category=34&lat=';
+   // var q4 = '&desc=False&status=upcoming&sig_id=216618862&sig=924c46add844e29e36c4128c9e2b097273906e2b';
+   
    var q1 = 'https://api.meetup.com/2/open_events?and_text=False&offset=0&format=json&lon=';
-   var q2 = '&limited_events=False&text_format=plain&only=description%2Ctime%2Cevent_url%2Cgroup.name%2Cname%2Cvenue.lon%2Cvenue.lat%2C&photo-host=public&page=30&radius=';
-   var q3 = '&category=34&lat=';
-   var q4 = '&desc=False&status=upcoming&sig_id=216618862&sig=924c46add844e29e36c4128c9e2b097273906e2b';
-
+	var q2 = '&limited_events=False&text_format=plain&only=name%2Cdescription%2Cevent_url%2Ctime%2Cvenue&photo-host=public&page=30&radius=';
+	var q3 = '&category=34&lat=';
+	var q4 = '&desc=False&status=upcoming&sig_id=216618862&sig=a3db75bd287bc8af20a76484dac69bf3129be91d';
+	
    var query = q1 + userLng + q2 + userDist + q3 + userLat + q4;
    console.log(query);
    
