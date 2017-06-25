@@ -172,6 +172,16 @@ padding-left: 0.4em;
    font-weight: bold;
 }
 
+.event-map{
+   text-align: center;
+   margin: 3em 0 1em;
+}
+
+.mini-map{
+   width: 90%;
+   max-width: 500px;
+}
+
 a{
    text-decoration: none;
 }

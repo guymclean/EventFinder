@@ -1,4 +1,28 @@
 var userLatLng;
+var userAddress;
+
+function addMap($anEvent, latLngObj, address){
+	var lat = latLngObj.lat();
+	var lng = latLngObj.lng();
+
+	var q1 = "https://maps.googleapis.com/maps/api/staticmap?center=";
+	var q2 = "&zoom=14&size=500x240&markers=";
+	var q3 = "&key=AIzaSyAG73PJJYZhu68W9qNjDBjIVecXzgXiZIo";
+	var query = q1 + lat + "," + lng + q2 + lat + "," + lng + q3;
+
+	var mapImage = "<img class='mini-map' src=" + query + " title='Click for directions' alt='Click for directions'>";
+	var mapLink = "https://maps.google.co.uk/maps?saddr=" + userAddress.replace(/ /g, "+") + "&daddr=" + address.replace(/ /g, "+");
+	var mapString = "<a href=" + mapLink + " target='_blank'>" + mapImage + "</a>";
+
+	$anEvent.find('.event-map').html(mapString);
+}
+
+
+function getAddress(lat, lng){
+
+
+}
+
 
 function initMap(){
 
@@ -8,8 +32,9 @@ function initMap(){
 	  center: {lat: 55.9533, lng: -3.1883},
 	  zoom: 13,
 	  disableDefaultUI: true
-
 	});
+
+	var geocoder = new google.maps.Geocoder;
 
 	var input = document.getElementById('user-address');
 
@@ -33,9 +58,9 @@ function initMap(){
 		return;
 	  }
 
-	//   console.log(place.geometry.location);
 	  userLatLng = place.geometry.location;
-	  console.log(userLatLng.toString());
+	  userAddress = autocomplete.gm_accessors_.place.Fc.l;
+
 	  mapBounds = new google.maps.LatLngBounds();
 
 	  var address = '';

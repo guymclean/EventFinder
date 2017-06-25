@@ -26,18 +26,32 @@ function getEvents(lat, lng, distance){
               type: "GET",
               dataType: "jsonp",
 	  }),
-).done(function(eventbriteEvents, meetupEvents) {
-      //   var otcEvents = formatOTCEvents(otcEvents[0].data);_
-
+	).done(function(eventbriteEvents, meetupEvents) {
+		
+		console.log("unformatted");
+		console.log(meetupEvents);	
+		
 	     var eventbriteEvents = formatEventbriteEvents(eventbriteEvents[0].events);
+		 
+		 console.log("formatted");
+		console.log(meetupEvents);
+		
 	     var meetupEvents = formatMeetupEvents(meetupEvents[0].results);
 	     eventList.events = eventbriteEvents.concat(meetupEvents);
 
 	     //hide search animation
 	     $('#progress').css('display', 'none');
 
-		  eventList.sortByDate();
+		 eventList.sortByDate();
 	     displayAllEvents(eventList.events);
+
+
+        $.each(eventList.events, function(i, event){
+           if (event.address == null){
+             console.log(i);
+          }
+        });
+
 	  });
 
 }
@@ -54,11 +68,10 @@ function formatEventbriteEvents(unformattedEvents){
 			&& unformattedEvent.hasOwnProperty('url') && unformattedEvent.url != null
 			&& unformattedEvent.description.text != null)
 			{
-				var anEvent = createEventbriteEvent(unformattedEvent);
+			var anEvent = createEventbriteEvent(unformattedEvent);
 		      eventArray.push(anEvent);
 			}
    });
-
    return eventArray;
 }
 
@@ -79,7 +92,6 @@ function formatMeetupEvents(unformattedEvents){
          eventArray.push(anEvent);
       }
    });
-
    return eventArray;
 }
 
@@ -100,6 +112,7 @@ function createEventbriteEvent(eventObj) {
       date: dateObject,
 		displayDate: dateString,
       url: eventObj.url,
+      address: eventObj.venue.address.localized_address_display,
       latLng: eventLatLng
       };
 
@@ -123,6 +136,7 @@ function createMeetupEvent(eventObj) {
 		date: dateObject,
       displayDate: dateString,
       url: eventObj.event_url,
+      address: eventObj.venue.address_1,
       latLng: eventLatLng
       };
 
@@ -150,6 +164,8 @@ function createMeetupAPIString(userLat, userLng, userDist){
    var q4 = '&desc=False&status=upcoming&sig_id=216618862&sig=924c46add844e29e36c4128c9e2b097273906e2b';
 
    var query = q1 + userLng + q2 + userDist + q3 + userLat + q4;
+   console.log(query);
+   
    return query;
 }
 
