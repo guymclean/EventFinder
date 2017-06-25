@@ -182,6 +182,28 @@ padding-left: 0.4em;
    max-width: 500px;
 }
 
+.info-window{
+   text-align: center;
+   padding: 0 0 12px 12px;
+   font-size: 1.1em;
+}
+
+.info-window h3{
+   max-width: 240px;
+   font-size: 1.3em;
+   font-weight: normal;
+}
+
+.info-window p{ /* date */
+   font-size: 1em;
+   font-weight: bold;
+}
+
+.info-window a{
+   padding: 0 10px;
+}
+
+
 a{
    text-decoration: none;
 }
@@ -198,9 +220,6 @@ a:visited{
     #main-area {
         width: 100%;
     }
-
-
-
 
 
 }

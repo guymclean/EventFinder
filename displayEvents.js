@@ -5,9 +5,13 @@ function displayAllEvents(eventList){
       $('#no-events').css({'display' : 'block'});
       return;}
    $('#no-events').css({'display' : 'none'});
+
    $.each(eventList, function(i, anEvent){
       displayEvent(anEvent);
    });
+
+   //update map
+   map.fitBounds(mapBounds);
 }
 
 
@@ -18,22 +22,33 @@ function displayEvent(anEvent){
       .append($('<p>').attr({class:'event-description'}).html(anEvent.shortDescription))
       .append($('<div>').attr({class:'event-map'}))
       .appendTo($resultsTable);
+
+   addToMap(anEvent);
 }
 
 
 function closeEvent($anEvent){
-      $selectedEvent = null;
-      var index = $anEvent.attr("id");
-      var theEvent = eventList.events[index];
 
-      $anEvent.attr("class","event");
-      $anEvent.children(".event-title").html(theEvent.title);
-      $anEvent.children("p").html(theEvent.shortDescription);
-      $anEvent.children(".event-map").hide();
+   if (infoWindow){
+      infoWindow.close();
    }
+
+   $selectedEvent = null;
+   var index = $anEvent.attr("id");
+   var theEvent = eventList.events[index];
+
+   $anEvent.attr("class","event");
+   $anEvent.children(".event-title").html(theEvent.title);
+   $anEvent.children("p").html(theEvent.shortDescription);
+   $anEvent.children(".event-map").hide();
+}
 
 
 function openEvent($anEvent){
+
+   if($selectedEvent != null){
+      closeEvent($selectedEvent);}
+
    $selectedEvent = $anEvent;
    var index = $anEvent.attr("id");
    var theEvent = eventList.events[index];

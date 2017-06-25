@@ -54,9 +54,7 @@ $(document).ready(function(){
 		// && !$('#MAP!!:hover').length - don't close event if they're clicking on a link or the map
 
 		else{
-				if($selectedEvent != null){
-					closeEvent($selectedEvent);}
-				openEvent($(this));}
+			openEvent($(this));}
 	});
 
 	// display scroll to top icon if screen is scrolled

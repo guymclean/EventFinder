@@ -1,9 +1,5 @@
 var eventList = new listOfEvents();
 var $selectedEvent = null;
-//edinburgh 2 miles
-//https://www.eventbriteapi.com/v3/events/search/?expand=venue&location.within=2mi&location.latitude=51.4613&location.longitude=-0.3037&categories=102&token=A4R4LVO3IMVUQITDVHNI
-
-
 
 function getEvents(lat, lng, distance){
 
@@ -13,19 +9,9 @@ function getEvents(lat, lng, distance){
 
    //display search animation
    $('#progress').css('display', 'block');
-
-   $.when(
-   //   $.get({
-   //            url: "https://opentechcalendar.co.uk/api1/events.jsonp?callback=myfunc",
-   //            type: "GET",
-   //            dataType: "jsonp",
-	//   }),
+  $.when(
      $.get(eventbriteAPIString),
-     $.get({
-              url: meetupAPIString,
-              type: "GET",
-              dataType: "jsonp",
-	  }),
+     $.get({url: meetupAPIString, type: "GET", dataType: "jsonp"}),
 	).done(function(eventbriteEvents, meetupEvents) {
 		
 		console.log("unformatted");
@@ -133,7 +119,7 @@ function createMeetupEvent(eventObj) {
       title: eventObj.name,
       description: eventObj.description + moreInfoLink,
       shortDescription: eventObj.description.slice(0,300) + "...",
-		date: dateObject,
+		  date: dateObject,
       displayDate: dateString,
       url: eventObj.event_url,
       address: eventObj.venue.address_1 + " " + eventObj.venue.city,
@@ -157,13 +143,8 @@ function createEventbriteAPIString(userLat, userLng, userDist){
 
 
 function createMeetupAPIString(userLat, userLng, userDist){
-
-   // var q1 = 'https://api.meetup.com/2/open_events?and_text=False&offset=0&format=json&lon=';
-   // var q2 = '&limited_events=False&text_format=plain&only=description%2Ctime%2Cevent_url%2Cgroup.name%2Cname%2Cvenue.lon%2Cvenue.lat%2C&photo-host=public&page=30&radius=';
-   // var q3 = '&category=34&lat=';
-   // var q4 = '&desc=False&status=upcoming&sig_id=216618862&sig=924c46add844e29e36c4128c9e2b097273906e2b';
    
-   var q1 = 'https://api.meetup.com/2/open_events?and_text=False&offset=0&format=json&lon=';
+	var q1 = 'https://api.meetup.com/2/open_events?and_text=False&offset=0&format=json&lon=';
 	var q2 = '&limited_events=False&text_format=plain&only=name%2Cdescription%2Cevent_url%2Ctime%2Cvenue&photo-host=public&page=30&radius=';
 	var q3 = '&category=34&lat=';
 	var q4 = '&desc=False&status=upcoming&sig_id=216618862&sig=a3db75bd287bc8af20a76484dac69bf3129be91d';
@@ -189,11 +170,11 @@ function parseDate(aDate){
 }
 
 function clearPreviousSearch(){
-	eventsList = [];
-   selectedEvent = null;
-   $noEvents.detach();
-   $resultsTable.empty();
-   $noEvents.appendTo($resultsTable);
-	// removeMarker();
-	// mapBounds = new google.maps.LatLngBounds();
+  eventsList = [];
+  selectedEvent = null;
+  $noEvents.detach();
+  $resultsTable.empty();
+  $noEvents.appendTo($resultsTable);
+  removeMarkers();
+  mapBounds = new google.maps.LatLngBounds();
 }

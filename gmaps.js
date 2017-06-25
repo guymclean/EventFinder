@@ -1,5 +1,8 @@
 var userLatLng;
 var userAddress;
+var mapBounds;
+var eventMarkers = []; 
+var infoWindow = null;
 
 function addMap($anEvent, latLngObj, address){
 	var lat = latLngObj.lat();
@@ -18,10 +21,62 @@ function addMap($anEvent, latLngObj, address){
 }
 
 
-function getAddress(lat, lng){
+function createMarker(anEvent){
+	var marker = new google.maps.Marker({
+		position: anEvent.latLng,
+		map: map
+		});
+	mapBounds.extend(anEvent.latLng);
+	return marker;
+}
 
+
+function removeMarkers(){
+	if (eventMarkers != []){
+		while (eventMarkers.length){
+			eventMarkers.pop().setMap(null);
+		}
+		eventMarkers = [];
+	}	
+}
+
+
+function addToMap(anEvent){
+
+	var marker = new google.maps.Marker({
+		index: anEvent.index,
+		position: anEvent.latLng,
+		map: map
+	});
+	mapBounds.extend(anEvent.latLng);
+
+	eventMarkers.push(marker);
+
+	var directionsURL = "https://maps.google.co.uk/maps?saddr=" + userAddress.replace(/ /g, "+") +
+						"&daddr=" + anEvent.address.replace(/ /g, "+");
+
+	google.maps.event.addListener(marker, 'click', function(){
+
+		if (infoWindow){
+			infoWindow.close();
+		}
+
+		var eventSelector = ".event[id=" + marker.index + "]";
+		// var $event = $(eventSelector);
+		openEvent($(eventSelector));
+
+		infoWindow = new google.maps.InfoWindow({
+		content: "<div class='info-window'><h3>" + anEvent.title + "</h3><p>" + anEvent.displayDate + "</p><a href=" +
+				 anEvent.url + " target='_blank'>More info</a>|<a href=" + directionsURL + " target='_blank'>Directions</a></div>"
+		});
+
+		infoWindow.open(map, marker);
+	})
 
 }
+
+
+
 
 
 function initMap(){
