@@ -62,7 +62,6 @@ function addToMap(anEvent){
 		}
 
 		var eventSelector = ".event[id=" + marker.index + "]";
-		// var $event = $(eventSelector);
 		openEvent($(eventSelector));
 
 		infoWindow = new google.maps.InfoWindow({
@@ -74,9 +73,6 @@ function addToMap(anEvent){
 	})
 
 }
-
-
-
 
 
 function initMap(){

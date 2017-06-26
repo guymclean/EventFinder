@@ -120,6 +120,23 @@ padding-left: 0.4em;
 }
 
 
+#map-center{
+   z-index: 10;
+   position: fixed;
+   right: 3%;
+   bottom: 3%;
+   height: 100px;
+   width: 100px;
+   opacity: 0.6;
+   background: url('center-map.png') no-repeat;
+   background-size: contain;
+}
+
+#map-center:hover{
+   opacity: 0.8;
+   cursor: pointer;
+}
+
 
 .event{
    width: 90%;
@@ -173,11 +190,13 @@ padding-left: 0.4em;
 }
 
 .event-map{
+   margin: none;
    text-align: center;
-   margin: 3em 0 1em;
+   display: none !important; /* don't show on desktop */
 }
 
 .mini-map{
+   margin: 3em 0 1em;
    width: 90%;
    max-width: 500px;
 }
@@ -219,6 +238,10 @@ a:visited{
 
     #main-area {
         width: 100%;
+    }
+
+    .event-map{
+      display: block !important;
     }
 
 

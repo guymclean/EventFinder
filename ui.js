@@ -7,6 +7,7 @@ $(document).ready(function(){
 
 	$resultsTable = $('#results-table');
 	$scrollIcon = $('#scroll-icon');
+	$mapCenter = $('#map-center');
 	$noEvents = $('#no-events');
 	$hiddenDiv = $('#hidden-div');
 	$mapWindow = $('#map-window');
@@ -69,6 +70,11 @@ $(document).ready(function(){
 	$scrollIcon.click(function(){
         $('html,body').animate({ scrollTop: 0 }, 'medium');
         return false;
+    });
+
+	// center map when map center icon is clicked
+	$mapCenter.click(function(){
+        map.fitBounds(mapBounds);
     });
 
 

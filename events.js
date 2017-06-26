@@ -28,7 +28,7 @@ function getEvents(lat, lng, distance){
 	     //hide search animation
 	     $('#progress').css('display', 'none');
 
-		 eventList.sortByDate();
+		    eventList.sortByDate();
 	     displayAllEvents(eventList.events);
 
 

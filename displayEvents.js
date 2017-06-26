@@ -10,7 +10,6 @@ function displayAllEvents(eventList){
       displayEvent(anEvent);
    });
 
-   //update map
    map.fitBounds(mapBounds);
 }
 
@@ -40,7 +39,10 @@ function closeEvent($anEvent){
    $anEvent.attr("class","event");
    $anEvent.children(".event-title").html(theEvent.title);
    $anEvent.children("p").html(theEvent.shortDescription);
-   $anEvent.children(".event-map").hide();
+   
+   $anEvent.find('.event-map').html(""); // remove mini map
+
+   map.fitBounds(mapBounds);
 }
 
 
@@ -60,6 +62,23 @@ function openEvent($anEvent){
 
    addMap($anEvent, theEvent.latLng, theEvent.address);
    $anEvent.children(".event-map").show();
+
+   map.setCenter(theEvent.latLng);
+   map.setZoom(14);
+
+
+
+   //****** make a createInforWindow function
+   var directionsURL = "https://maps.google.co.uk/maps?saddr=" + userAddress.replace(/ /g, "+") +
+                  "&daddr=" + theEvent.address.replace(/ /g, "+");
+
+   infoWindow = new google.maps.InfoWindow({
+      content: "<div class='info-window'><h3>" + theEvent.title + "</h3><p>" + theEvent.displayDate + "</p><a href=" +
+             theEvent.url + " target='_blank'>More info</a>|<a href=" + directionsURL + " target='_blank'>Directions</a></div>"
+      });
+
+      infoWindow.open(map, eventMarkers[index]);
+
 
 
    $anEvent.scrollView(); // bring top of event to top of browser window
