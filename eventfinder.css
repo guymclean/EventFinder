@@ -244,5 +244,8 @@ a:visited{
       display: block !important;
     }
 
+    #map-center{
+      display: none;
+   }
 
 }

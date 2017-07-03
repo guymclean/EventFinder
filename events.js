@@ -13,14 +13,9 @@ function getEvents(lat, lng, distance){
      $.get(eventbriteAPIString),
      $.get({url: meetupAPIString, type: "GET", dataType: "jsonp"}),
 	).done(function(eventbriteEvents, meetupEvents) {
-		
-		console.log("unformatted");
-		console.log(meetupEvents);	
+			
 		
 	     var eventbriteEvents = formatEventbriteEvents(eventbriteEvents[0].events);
-		 
-		 console.log("formatted");
-		console.log(meetupEvents);
 		
 	     var meetupEvents = formatMeetupEvents(meetupEvents[0].results);
 	     eventList.events = eventbriteEvents.concat(meetupEvents);
@@ -31,6 +26,8 @@ function getEvents(lat, lng, distance){
 		    eventList.sortByDate();
 	     displayAllEvents(eventList.events);
 
+       console.log("formatted sorted events");
+      console.log(eventList.events);
 
         $.each(eventList.events, function(i, event){
            if (event.address == null){
@@ -48,7 +45,7 @@ function formatEventbriteEvents(unformattedEvents){
 
    $.each(unformattedEvents, function(i, unformattedEvent){
 		//check each object has suitable attributes/values
-		if (unformattedEvent.hasOwnProperty('venue') && unformattedEvent.venue.address.latitude != null
+		if (unformattedEvent.hasOwnProperty('venue') && unformattedEvent.venue.address.latitude != null && unformattedEvent.venue.address.latitude != 0
 			&& unformattedEvent.name.text != null
 			&& unformattedEvent.start.local != null
 			&& unformattedEvent.hasOwnProperty('url') && unformattedEvent.url != null
@@ -68,7 +65,7 @@ function formatMeetupEvents(unformattedEvents){
 
    $.each(unformattedEvents, function(i, unformattedEvent){
 		//check each object has suitable attributes/values *** MAKE THIS A SEPARATE COMPREHENSIVE FUNCTION
-		if (unformattedEvent.hasOwnProperty('venue') && unformattedEvent.venue.lat != null
+		if (unformattedEvent.hasOwnProperty('venue') && unformattedEvent.venue.lat != null && unformattedEvent.venue.lat != 0
 			&& unformattedEvent.name != null
 			&& unformattedEvent.time != null
 			&& unformattedEvent.hasOwnProperty('event_url') && unformattedEvent.event_url != null

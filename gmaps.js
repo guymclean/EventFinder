@@ -52,27 +52,35 @@ function addToMap(anEvent){
 
 	eventMarkers.push(marker);
 
-	var directionsURL = "https://maps.google.co.uk/maps?saddr=" + userAddress.replace(/ /g, "+") +
-						"&daddr=" + anEvent.address.replace(/ /g, "+");
-
+	
+	// when a marker is clicked
 	google.maps.event.addListener(marker, 'click', function(){
+		console.log(marker.index);
+		console.log(eventList.events[marker.index]);
+		console.log(eventList[0]);
 
-		if (infoWindow){
-			infoWindow.close();
-		}
+		if (infoWindow){console.log(infoWindow); infoWindow.close();}
 
 		var eventSelector = ".event[id=" + marker.index + "]";
 		openEvent($(eventSelector));
+	});
 
-		infoWindow = new google.maps.InfoWindow({
+}
+
+
+function createInfoWindow(anEvent, marker){
+
+	var directionsURL = "https://maps.google.co.uk/maps?saddr=" + userAddress.replace(/ /g, "+") +
+						"&daddr=" + anEvent.address.replace(/ /g, "+");
+
+	infoWindow = new google.maps.InfoWindow({
 		content: "<div class='info-window'><h3>" + anEvent.title + "</h3><p>" + anEvent.displayDate + "</p><a href=" +
 				 anEvent.url + " target='_blank'>More info</a>|<a href=" + directionsURL + " target='_blank'>Directions</a></div>"
 		});
 
-		infoWindow.open(map, marker);
-	})
-
+	infoWindow.open(map, marker);
 }
+
 
 
 function initMap(){
@@ -82,7 +90,7 @@ function initMap(){
 	map = new google.maps.Map(document.getElementById('map'), {
 	  center: {lat: 55.9533, lng: -3.1883},
 	  zoom: 13,
-	  disableDefaultUI: true
+	  // disableDefaultUI: true
 	});
 
 	var geocoder = new google.maps.Geocoder;
@@ -110,7 +118,7 @@ function initMap(){
 	  }
 
 	  userLatLng = place.geometry.location;
-	  userAddress = autocomplete.gm_accessors_.place.Fc.l;
+	  userAddress = $('#user-address').val();
 
 	  mapBounds = new google.maps.LatLngBounds();
 
